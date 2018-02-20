@@ -10,7 +10,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Djava.library.path=/usr/lib/jni -classpath %classpath ${packageClassName}</exec.args>
+                <exec.args>-Djava.library.path=/usr/lib/jni -classpath %classpath com.github.qlefevre.redalarm.Crawler -u redalert -p g2euxprwz2da667a -s http://lesaascestsensas.altairsystem.fr/?&amp;mod=server_update</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
@@ -24,7 +24,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -Djava.library.path=/usr/lib/jni -classpath %classpath ${packageClassName}</exec.args>
+                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -Djava.library.path=/usr/lib/jni -classpath %classpath com.github.qlefevre.redalarm.Crawler -u redalert -p g2euxprwz2da667a -s http://lesaascestsensas.altairsystem.fr/?&amp;mod=server_update</exec.args>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
             </properties>
@@ -39,7 +39,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Djava.library.path=/usr/lib/jni -classpath %classpath ${packageClassName}</exec.args>
+                <exec.args>-Djava.library.path=/usr/lib/jni -classpath %classpath com.github.qlefevre.redalarm.Crawler -u redalert -p g2euxprwz2da667a -s http://lesaascestsensas.altairsystem.fr/?&amp;mod=server_update</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
