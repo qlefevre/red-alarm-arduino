@@ -30,10 +30,8 @@ public class Crawler extends AbstractCommonMain {
         String vUser = vCommandLine.getOptionValue("u");
         String vPassword = vCommandLine.getOptionValue("p");
         String vUrl = vCommandLine.getOptionValue("s");
-        while (true) {
-            System.out.println("Update servers");
-            checkURL(vUrl, vUser, vPassword);
-            Thread.sleep(300000); // 5 minutes
-        }
+
+        System.out.println("Update servers");
+        checkURL(vUrl, vUser, vPassword);
     }
 }
