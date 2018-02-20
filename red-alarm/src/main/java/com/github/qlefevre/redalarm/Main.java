@@ -28,6 +28,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -42,22 +48,27 @@ public class Main {
     private static final String COMMAND_OFF = "off";
 
     public static void main(String[] pArgs) throws Exception {
+        CommandLine vCommandLine = getCommandLine(pArgs);
 
-        String vUser = "redalert";
-        String vPassword = "g2euxprwz2da667a";
-        String vUrl = "http://lesaascestsensas.altairsystem.fr";
+        String vUser = vCommandLine.getOptionValue("u");
+        String vPassword = vCommandLine.getOptionValue("p");
+        String vUrl = vCommandLine.getOptionValue("s");
 
         checkURL(vUrl, vUser,vPassword);
 
-        List<CommPortIdentifier> vPorts = Collections.list(CommPortIdentifier.getPortIdentifiers());
         String vFirstPort = null;
-        for (CommPortIdentifier vPort : vPorts) {
-            if (vPort.getPortType() == CommPortIdentifier.PORT_SERIAL && (vPort.getName().contains("ttyUSB") || vPort.getName().contains("COM4"))) {
-                System.out.println(vPort.getName() + " - " + vPort.getPortType());
-                if (vFirstPort == null) {
-                    vFirstPort = vPort.getName();
+        if (!vCommandLine.hasOption('c')) {
+            List<CommPortIdentifier> vPorts = Collections.list(CommPortIdentifier.getPortIdentifiers());
+            for (CommPortIdentifier vPort : vPorts) {
+                if (vPort.getPortType() == CommPortIdentifier.PORT_SERIAL && (vPort.getName().contains("ttyUSB") || vPort.getName().contains("COM"))) {
+                    System.out.println(vPort.getName() + " - " + vPort.getPortType());
+                    if (vFirstPort == null) {
+                        vFirstPort = vPort.getName();
+                    }
                 }
             }
+        }else{
+            vFirstPort = vCommandLine.getOptionValue("c");
         }
 
         System.out.println("Port sélectionné : " + vFirstPort);
@@ -220,6 +231,35 @@ public class Main {
             vEx.printStackTrace();
         }
         return rCookie;
+    }
+
+    /**
+     * Retourne une instance de CommandLine pour récupérer les options données en paramètres
+     *
+     * @param pArgs les arguments donnés au programme
+     *
+     * @return une instance de CommandLine pour récupérer les options données en paramètres
+     * @throws ParseException
+     */
+    private static CommandLine getCommandLine(String[] pArgs) throws ParseException {
+
+        // Récupère les options
+        Options vOptions = new Options();
+        vOptions.addOption("h", "help", false, "show help");
+        vOptions.addOption("u", "user", true, "user");
+        vOptions.addOption("p", "password", true, "password");
+        vOptions.addOption("s", "site", true, "site to check");
+        vOptions.addOption("c", "com", true, "port com");
+        CommandLineParser vCmdLineParser = new DefaultParser();
+        CommandLine rCommandLine = vCmdLineParser.parse(vOptions, pArgs);
+
+        // On affiche l'aide si besoin
+        if(rCommandLine.hasOption('h') || !rCommandLine.hasOption('p') ||!rCommandLine.hasOption('u') ){
+            HelpFormatter vformatter=  new HelpFormatter();
+            vformatter.printHelp(Main.class.getSimpleName(), vOptions);
+        }
+
+        return rCommandLine;
     }
 
 }
