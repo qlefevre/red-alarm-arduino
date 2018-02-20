@@ -48,7 +48,7 @@
                 <configuration>
                     <programs>
                         <program>
-                            <mainClass>altair.redalert.Main</mainClass>
+                            <mainClass>com.github.qlefevre.redalarm.Main</mainClass>
                             <id>app</id>
                             <jvmSettings>
                                 <initialMemorySize>32m</initialMemorySize>
@@ -60,6 +60,8 @@
                             </jvmSettings>
                         </program>
                     </programs>
+                    <useWildcardClassPath>true</useWildcardClassPath>
+                    <repositoryLayout>flat</repositoryLayout>
                 </configuration>
                 <executions>
                     <execution>
